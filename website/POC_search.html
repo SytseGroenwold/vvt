@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="container">
+  <div id="top">
+    <h1>Bond voor Taalzuivering</h1>
+  </div>
+
+  <input type="text" id="myInput2" class="zoekveld" onkeyup="zoeken(this.id)" placeholder="Zoek op woord">
+  <input type="text" id="myInput3" class="zoekveld" onkeyup="zoeken(this.id)" placeholder="Zoek in Beschrijving">
+  <br>
+  <input type="text" id="myInput4" class="zoekveld" onkeyup="zoeken(this.id)" placeholder="Zoek overal">
+
+
+  <script type="text/javascript" src="woordenboek2.json"></script>
+  <script type="text/javascript" src="javascript.js"></script>
+
+  <button id="btn" onclick="genereerTabel( )"> Click Here </button> <br>
+  <div id="container" onload="genereerTabel()"></div>
+  <script>
+   
+    // Function to convert JSON data to HTML table
+    function genereerTabel() {
+       
+       // Sample JSON data
+       let jsonData = JSON.parse(woordenboek)
+       
+       // Get the container element where the table will be inserted
+       let container = document.getElementById("container");
+       
+       // Create the table element
+       let table = document.createElement("table");
+       
+       // Get the keys (column names) of the first object in the JSON data
+       let cols = Object.keys(jsonData[0]);
+       
+       // Create the header element
+       let thead = document.createElement("thead");
+       let tr = document.createElement("tr");
+       
+       // Loop through the column names and create header cells
+       cols.forEach((item) => {
+          let th = document.createElement("th");
+          th.innerText = item; // Set the column name as the text of the header cell
+          tr.appendChild(th); // Append the header cell to the header row
+       });
+       thead.appendChild(tr); // Append the header row to the header
+       table.append(tr) // Append the header to the table
+       
+       // Loop through the JSON data and create table rows
+       jsonData.forEach((item) => {
+          let tr = document.createElement("tr");
+          
+          // Get the values of the current object in the JSON data
+          let vals = Object.values(item);
+          
+          // Loop through the values and create table cells
+          vals.forEach((elem) => {
+             let td = document.createElement("td");
+             td.innerText = elem; // Set the value as the text of the table cell
+             tr.appendChild(td); // Append the table cell to the table row
+          });
+          table.appendChild(tr); // Append the table row to the table
+       });
+       container.appendChild(table) // Append the table to the container element
+    }
+ </script>
+
+  <!-- 
+  <table id="myTable">
+    <tr class="header">
+      <th style="width:200px;">Woord</th>
+      <th>Beschrijving</th>
+    </tr>
+    <tr>
+      <td>accijns</td>
+      <td>(m.; accijnzen) [(1526) onder invloed van cijns (belasting) gevormd uit accijs Latijn accisia (belasting) van accidere (afsnijden)], 1 ongeld [Middelnederlands].</td>
+    </tr>
+    <tr>
+      <td>basisschool</td>
+      <td>(v.; basisscholen), 1 grondleerhuis.</td>
+    </tr>
+    <tr>
+      <td>carport</td>
+      <td>(m.; -s) [Engels], 1 wagenluifel.</td>
+    </tr>
+    <tr>
+      <td>diagonaal</td>
+      <td>(bn.), 1 overdwars.</td>
+    </tr>
+    <tr>
+      <td>emailleren</td>
+      <td>(overgankelijk werkwoord), 1 versmeltglazen.</td>
+    </tr>
+    <tr>
+      <td>fanaat, fanaticus</td>
+      <td>(m.; fanaten, fanatici) [Latijn fanaticus (dwepend, bezeten)], 1 dweper, dweepzuchtige, geestdrijver.</td>
+    </tr>
+  </table>  -->
+
+  <script>
+    function zoeken(zoekveld) {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById(zoekveld);
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+    
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 1; i < tr.length; i++) {
+        switch(zoekveld) {
+          case "myInput2":
+            td = tr[i].getElementsByTagName("td")[0];
+            break;
+          case "myInput3":
+            td = tr[i].getElementsByTagName("td")[1];
+            break;
+          case "myInput4":
+            td = tr[i];
+            break;
+        }
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+</div>
+
+</body>
+</html>
