@@ -62,9 +62,24 @@ input[type="text"]:focus {
   font-weight: bold;
   background-color: #FFD580;
   color: black;
-  padding: 1px 2px;
-  margin: 0 1px;
-  border-radius: 5px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Exacte match styling */
+.exact-match {
+  background-color: #e8f5e8 !important;
+  border-left: 4px solid #4CAF50 !important;
+  font-weight: bold;
+}
+
+.exact-match td {
+  background-color: #e8f5e8;
+}
+
+.exact-match .highlight {
+  background-color: #4CAF50;
+  color: white;
 }
 
 /* Dark mode support */
@@ -93,7 +108,22 @@ input[type="text"]:focus {
   }
   
   .highlight {
-    background-color: #FFD700; /* Bright gold for dark mode */
+    background-color: #FFD700;
     color: black;
+  }
+  
+  /* Exacte match styling voor dark mode */
+  .exact-match {
+    background-color: #1a3d1a !important;
+    border-left: 4px solid #6CAF70 !important;
+  }
+  
+  .exact-match td {
+    background-color: #1a3d1a;
+  }
+  
+  .exact-match .highlight {
+    background-color: #6CAF70;
+    color: white;
   }
 }

@@ -34,16 +34,26 @@ function App() {
       const filtered = woordenboek.filter((item) => {
         return item.woord.toLowerCase().includes(searchTerm.toLowerCase())
       })
-      setResultaten(filtered)
+      
+      // Sorteer resultaten: exacte matches eerst, dan gedeeltelijke matches
+      const sorted = filtered.sort((a, b) => {
+        const aExact = a.woord.toLowerCase() === searchTerm.toLowerCase()
+        const bExact = b.woord.toLowerCase() === searchTerm.toLowerCase()
+        
+        if (aExact && !bExact) return -1
+        if (!aExact && bExact) return 1
+        return 0
+      })
+      
+      setResultaten(sorted)
     }
   }
 
-  // Initialize results with all items on component mount and set focus
+  // Start pagina
   useEffect(() => {
-    setResultaten([])
-    // Zet focus op het zoekveld wanneer de component mount
+    setResultaten([]) // Leeg de resultaten bij het laden van de pagina
     if (inputRef.current) {
-      inputRef.current.focus()
+      inputRef.current.focus() // Zet focus op het zoekveld wanneer de component mount
     }
   }, [])
 
@@ -66,8 +76,9 @@ function App() {
         </thead>
         <tbody>
           {resultaten.map((woordenboekitem, index) => {
+            const isExactMatch = woordenboekitem.woord.toLowerCase() === zoekwoord.toLowerCase()
             return (
-              <tr key={index}>
+              <tr key={index} className={isExactMatch ? 'exact-match' : ''}>
                 <td>{highlightSearchTerm(woordenboekitem.woord, zoekwoord)}</td>
                 <td>{woordenboekitem.beschrijving}</td>
               </tr>
