@@ -48,6 +48,8 @@ input[type="text"] {
   border: 2px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
+  background-color: white;
+  color: black;
 }
 
 input[type="text"]:focus {
@@ -59,6 +61,39 @@ input[type="text"]:focus {
 .highlight {
   font-weight: bold;
   background-color: #FFD580;
-  /* padding: 2px 4px; */
-  /* border-radius: 3px; */
+  color: black;
+  padding: 1px 2px;
+  margin: 0 1px;
+  border-radius: 5px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  #myTable th, #myTable td {
+    border-color: #555;
+  }
+  
+  #myTable th {
+    background-color: #333;
+    color: white;
+  }
+  
+  #myTable tbody tr:hover {
+    background-color: #2a2a2a;
+  }
+  
+  input[type="text"] {
+    background-color: #2d2d2d;
+    color: white;
+    border-color: #555;
+  }
+  
+  input[type="text"]:focus {
+    border-color: #6CAF70;
+  }
+  
+  .highlight {
+    background-color: #FFD700; /* Bright gold for dark mode */
+    color: black;
+  }
 }
