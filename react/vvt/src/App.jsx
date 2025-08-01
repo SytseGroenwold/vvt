@@ -59,31 +59,97 @@ function App() {
 
   return (
     <>
-      <h1> Vereniging voor Taalzuivering
-      </h1>
-      <input 
+      <h1>Vereniging voor Taalzuivering</h1>
+      <input
         ref={inputRef}
-        type='text' 
-        onChange={zoeken} 
-        placeholder='Zoek naar een woord' 
+        type="text"
+        onChange={zoeken}
+        placeholder="Zoek naar een woord"
       />
+
+      {/* Exact match table (always visible) */}
       <table id="myTable">
         <thead>
           <tr className="header">
             <th>Woord</th>
+            <th>Oor-sprong</th>
             <th>Beschrijving</th>
+            <th>Wiki</th>
+            <th>V.D.</th>
+            <th>E.W.</th>
           </tr>
         </thead>
         <tbody>
-          {resultaten.map((woordenboekitem, index) => {
-            const isExactMatch = woordenboekitem.woord.toLowerCase() === zoekwoord.toLowerCase()
-            return (
-              <tr key={index} className={isExactMatch ? 'exact-match' : ''}>
-                <td>{highlightSearchTerm(woordenboekitem.woord, zoekwoord)}</td>
-                <td>{woordenboekitem.beschrijving}</td>
+          {zoekwoord && resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()) ? (
+            <tr className="header">
+              <td>{highlightSearchTerm(
+                resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()).woord,
+                zoekwoord
+              )}</td>
+              <td></td>
+              <td>{resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()).beschrijving}</td>
+              <td>
+                <a href={`https://nl.wiktionary.org/wiki/${zoekwoord}`} target="_blank" rel="noopener noreferrer">wiki</a>
+              </td>
+              <td>
+                <a href={`https://www.ensie.nl/van-dale/${zoekwoord}`} target="_blank" rel="noopener noreferrer">v.d.</a>
+              </td>
+              <td>
+                <a href={`https://www.ensie.nl/etymologisch-woordenboek/${zoekwoord}`} target="_blank" rel="noopener noreferrer">e.w.</a>
+              </td>
+            </tr>
+          ) : (
+            <tr>
+              <td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>
+                Geen exacte match gevonden
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      {/* Main table for partial matches (always visible) */}
+      <table id="myTable">
+        <thead>
+          <tr className="header">
+            <th>Woord</th>
+            <th>Oor-sprong</th>
+            <th>Beschrijving</th>
+            <th>Wiki</th>
+            <th>V.D.</th>
+            <th>E.W.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {resultaten
+            .filter(item => item.woord.toLowerCase() !== zoekwoord.toLowerCase())
+            .length === 0 ? (
+              <tr>
+                <td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>
+                  Geen gedeeltelijke matches gevonden
+                </td>
               </tr>
+            ) : (
+              resultaten
+                .filter(item => item.woord.toLowerCase() !== zoekwoord.toLowerCase())
+                .map((woordenboekitem, index) => (
+                  <tr key={index}>
+                    <td>{highlightSearchTerm(woordenboekitem.woord, zoekwoord)}</td>
+                    <td></td>
+                    <td>{woordenboekitem.beschrijving}</td>
+                    <td>
+                      <a href={`https://nl.wiktionary.org/wiki/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">wiki</a>
+                    </td>
+                    <td>
+                      <a href={`https://www.ensie.nl/van-dale/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">v.d.</a>
+                    </td>
+                    <td>
+                      <a href={`https://www.ensie.nl/etymologisch-woordenboek/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">e.w.</a>
+                    </td>
+                  </tr>
+                ))
             )
-          })}
+          }
         </tbody>
       </table>
     </>

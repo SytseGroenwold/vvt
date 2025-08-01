@@ -26,14 +26,26 @@
   font-weight: bold;
 }
 
+
 /* Vaste kolom breedtes */
 #myTable th:first-child, #myTable td:first-child {
-  width: 200px; /* Vaste breedte voor "Woord" kolom */
+  width: 150px; /* Vaste breedte voor "Woord" kolom */
 }
 
-#myTable th:last-child, #myTable td:last-child {
-  width: calc(100% - 200px); /* Resterende ruimte voor "Beschrijving" kolom */
+#myTable th:nth-child(2), #myTable td:nth-child(2),
+#myTable th:nth-child(4), #myTable td:nth-child(4),
+#myTable th:nth-child(5), #myTable td:nth-child(5),
+#myTable th:nth-child(6), #myTable td:nth-child(6) {
+  width: 60px; /* Vaste breedte voor "Oorsprong" kolom */
 }
+
+#myTable th:nth-child(3),
+#myTable td:nth-child(3) {
+  width: auto;
+  min-width: 400px;
+}
+
+
 
 /* Hover effect voor rijen */
 #myTable tbody tr:hover {
