@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import woordenboekData from './assets/woordenboek.json'
+import wikiIcon from './assets/wiki.svg'
+import vanDaleIcon from './assets/vd.jpg'
+import ewnIcon from './assets/ewn.png'
 
 function App() {
   const [zoekwoord, setZoekWoord] = useState('')
@@ -67,7 +70,6 @@ function App() {
         placeholder="Zoek naar een woord"
       />
 
-      {/* Exact match table (always visible) */}
       <table id="myTable">
         <thead>
           <tr className="header">
@@ -79,6 +81,11 @@ function App() {
             <th>E.W.</th>
           </tr>
         </thead>
+        <tbody></tbody>
+      </table>
+
+      {/* Exact match table (always visible) */}
+      <table id="myTable">
         <tbody>
           {zoekwoord && resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()) ? (
             <tr className="header">
@@ -89,13 +96,19 @@ function App() {
               <td></td>
               <td>{resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()).beschrijving}</td>
               <td>
-                <a href={`https://nl.wiktionary.org/wiki/${zoekwoord}`} target="_blank" rel="noopener noreferrer">wiki</a>
+                <a href={`https://nl.wiktionary.org/wiki/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
+                  <img src={wikiIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                </a>
               </td>
               <td>
-                <a href={`https://www.ensie.nl/van-dale/${zoekwoord}`} target="_blank" rel="noopener noreferrer">v.d.</a>
+                <a href={`https://www.ensie.nl/van-dale/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
+                  <img src={vanDaleIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                </a>
               </td>
               <td>
-                <a href={`https://www.ensie.nl/etymologisch-woordenboek/${zoekwoord}`} target="_blank" rel="noopener noreferrer">e.w.</a>
+                <a href={`https://www.ensie.nl/etymologisch-woordenboek/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
+                  <img src={ewnIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                </a>
               </td>
             </tr>
           ) : (
@@ -110,16 +123,6 @@ function App() {
 
       {/* Main table for partial matches (always visible) */}
       <table id="myTable">
-        <thead>
-          <tr className="header">
-            <th>Woord</th>
-            <th>Oor-sprong</th>
-            <th>Beschrijving</th>
-            <th>Wiki</th>
-            <th>V.D.</th>
-            <th>E.W.</th>
-          </tr>
-        </thead>
         <tbody>
           {resultaten
             .filter(item => item.woord.toLowerCase() !== zoekwoord.toLowerCase())
@@ -138,13 +141,19 @@ function App() {
                     <td></td>
                     <td>{woordenboekitem.beschrijving}</td>
                     <td>
-                      <a href={`https://nl.wiktionary.org/wiki/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">wiki</a>
+                      <a href={`https://nl.wiktionary.org/wiki/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
+                        <img src={wikiIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                      </a>
                     </td>
                     <td>
-                      <a href={`https://www.ensie.nl/van-dale/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">v.d.</a>
+                      <a href={`https://www.ensie.nl/van-dale/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
+                        <img src={vanDaleIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                      </a>
                     </td>
                     <td>
-                      <a href={`https://www.ensie.nl/etymologisch-woordenboek/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">e.w.</a>
+                      <a href={`https://www.ensie.nl/etymologisch-woordenboek/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
+                        <img src={ewnIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                      </a>
                     </td>
                   </tr>
                 ))
