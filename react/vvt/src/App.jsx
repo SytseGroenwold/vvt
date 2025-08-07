@@ -87,37 +87,37 @@ function App() {
       {/* Exact match table (always visible) */}
       <table id="myTable">
         <tbody>
-          {zoekwoord && resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()) ? (
-            <tr className="header">
-              <td>{highlightSearchTerm(
-                resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()).woord,
-                zoekwoord
-              )}</td>
-              <td></td>
-              <td>{resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase()).beschrijving}</td>
-              <td>
-                <a href={`https://nl.wiktionary.org/wiki/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
-                  <img src={wikiIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
-                </a>
-              </td>
-              <td>
-                <a href={`https://www.ensie.nl/van-dale/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
-                  <img src={vanDaleIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
-                </a>
-              </td>
-              <td>
-                <a href={`https://www.ensie.nl/etymologisch-woordenboek/${woordenboekitem.woord}`} target="_blank" rel="noopener noreferrer">
-                  <img src={ewnIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
-                </a>
-              </td>
-            </tr>
-          ) : (
-            <tr>
-              <td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>
-                Geen exacte match gevonden
-              </td>
-            </tr>
-          )}
+          {(() => {
+            const exactMatch = resultaten.find(item => item.woord.toLowerCase() === zoekwoord.toLowerCase());
+            return exactMatch ? (
+              <tr className="header">
+                <td>{highlightSearchTerm(exactMatch.woord, zoekwoord)}</td>
+                <td></td>
+                <td>{exactMatch.beschrijving}</td>
+                <td>
+                  <a href={`https://nl.wiktionary.org/wiki/${exactMatch.woord}`} target="_blank" rel="noopener noreferrer">
+                    <img src={wikiIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                  </a>
+                </td>
+                <td>
+                  <a href={`https://www.ensie.nl/van-dale/${exactMatch.woord}`} target="_blank" rel="noopener noreferrer">
+                    <img src={vanDaleIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                  </a>
+                </td>
+                <td>
+                  <a href={`https://www.ensie.nl/etymologisch-woordenboek/${exactMatch.woord}`} target="_blank" rel="noopener noreferrer">
+                    <img src={ewnIcon} alt="wiki" style={{ width: '100%', height: 'auto', maxWidth: '40px' }} />
+                  </a>
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>
+                  Geen exacte match gevonden
+                </td>
+              </tr>
+            );
+          })()}
         </tbody>
       </table>
 
